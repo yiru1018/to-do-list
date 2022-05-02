@@ -1,16 +1,15 @@
 import Item from './Item';
 
-function List({ listData, deleteData }) {
+function List({ listData, reNew }) {
     return (
         <div>
-            {listData.map((item) => {
-                const { task, id } = item;
+            {listData.map((task) => {
                 return (
                     <Item
-                        key={id}
-                        id={id}
-                        task={task}
-                        deleteData={deleteData}
+                        key={task.id}
+                        id={task.id}
+                        task={task.todo}
+                        reNew={reNew}
                     />
                 );
             })}

@@ -3,7 +3,6 @@ import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './HomePage';
 import ListPage from './ListPage';
-import { useState } from 'react';
 
 const GlobalStyle = createGlobalStyle`
     body {

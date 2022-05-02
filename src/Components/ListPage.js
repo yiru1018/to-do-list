@@ -1,19 +1,33 @@
 import AddForm from './AddForm';
 import List from './List';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { db } from '../firebase-config';
+import { collection, getDocs } from 'firebase/firestore';
+
+const style = {
+    width: '300px',
+};
 
 function ListPage() {
-    const style = {
-        width: '300px',
+    const [tasks, setTasks] = useState([]);
+    const tasksCollectionRef = collection(db, 'task');
+
+    const getTask = async () => {
+        const data = await getDocs(tasksCollectionRef);
+        setTasks(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
+
+    useEffect(() => {
+        getTask();
+    }, []);
+
     let navigate = useNavigate();
-    const [data, setData] = useState([]);
 
     return (
         <div style={style}>
-            <AddForm add={setData} />
-            <List listData={data} deleteData={setData} />
+            <AddForm reNew={getTask} />
+            <List listData={tasks} reNew={getTask} />
             <button
                 onClick={() => {
                     navigate('/');

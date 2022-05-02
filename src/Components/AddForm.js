@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { v4 } from 'uuid';
+import { db } from '../firebase-config';
+import { collection, addDoc } from 'firebase/firestore';
 
 const AddFormDiv = styled.div`
     padding: 40px;
@@ -10,22 +11,28 @@ const AddBtn = styled.button`
     margin-left: 5px;
 `;
 
-function AddForm({ add }) {
-    const [task, setTask] = useState('');
-    function taskChange(e) {
-        setTask(e.target.value);
-    }
-    function addTask() {
-        add(function (prevData) {
-            return [...prevData, { task, id: v4() }];
+function AddForm({ reNew }) {
+    const [newTask, setNewTask] = useState('');
+    const tasksCollectionRef = collection(db, 'task');
+
+    const createTask = async () => {
+        await addDoc(tasksCollectionRef, {
+            todo: newTask,
         });
-        setTask('');
-    }
+        reNew();
+        setNewTask('');
+    };
 
     return (
         <AddFormDiv>
-            <input type="text" value={task} onChange={taskChange}></input>
-            <AddBtn onClick={addTask}>Add</AddBtn>
+            <input
+                type="text"
+                value={newTask}
+                onChange={(event) => {
+                    setNewTask(event.target.value);
+                }}
+            ></input>
+            <AddBtn onClick={createTask}>Add</AddBtn>
         </AddFormDiv>
     );
 }
