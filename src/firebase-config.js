@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from '@firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: 'AIzaSyCoFQqK_2bX5c1vSQXkQ7nBRNTqgs6P_l0',
+    apiKey: '****************',
     authDomain: 'fir-react-sample-4f1a5.firebaseapp.com',
     projectId: 'fir-react-sample-4f1a5',
     storageBucket: 'fir-react-sample-4f1a5.appspot.com',
